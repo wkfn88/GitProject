@@ -10,6 +10,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 public class Main {
@@ -30,8 +31,7 @@ public class Main {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Main window = new Main();
-					window.frame.setVisible(true);
+					new Main();
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -44,6 +44,7 @@ public class Main {
 	 */
 	public Main() {
 		initialize();
+		frame.setVisible(true);
 	}
 
 	/**
@@ -60,7 +61,7 @@ public class Main {
 		frame.getContentPane().add(tf_id);
 		tf_id.setColumns(10);
 		
-		tf_pwd = new JTextField();
+		tf_pwd = new JPasswordField();
 		tf_pwd.setBounds(76, 95, 116, 21);
 		frame.getContentPane().add(tf_pwd);
 		tf_pwd.setColumns(10);
@@ -100,21 +101,23 @@ public class Main {
 					RegisterDAO dao = new RegisterDAO();
 					ArrayList<MemberVo> list = dao.list();
 					
-					for( int i = 0; i < list.size(); i++ ) {
-						if( id.equals(list.get(i).getId()) && pwd.equals(list.get(i).getPwd()) ) {
-							new Seller(id);
-							break;
-						}
-						
-						if( i == list.size()-1 ) {
-							JOptionPane.showMessageDialog(frame, "해당 아이디가 틀렸거나 존재하지 않습니다.", "오류", JOptionPane.ERROR_MESSAGE);
+					if(list.size() == 0) {
+						JOptionPane.showMessageDialog(frame, "해당 아이디가 틀렸거나 존재하지 않습니다.", "오류", JOptionPane.ERROR_MESSAGE);
+					}else {
+						for( int i = 0; i < list.size(); i++ ) {
+							if( id.equals(list.get(i).getId()) && pwd.equals(list.get(i).getPwd()) ) {
+								new Seller(id);
+								frame.dispose();
+								break;
+							}
+							
+							if( i == list.size()-1 ) {
+								JOptionPane.showMessageDialog(frame, "해당 아이디가 틀렸거나 존재하지 않습니다.", "오류", JOptionPane.ERROR_MESSAGE);
+							}
 						}
 					}
 				}
-				
-				
 			}
-			
 		});
 		
 		bt_reg.addActionListener(new ActionListener() {
