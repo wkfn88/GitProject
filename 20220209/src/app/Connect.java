@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 public class Connect {
 	private String driver = "oracle.jdbc.driver.OracleDriver";
-	private String url = "jdbc:oracle:thin:@localhost:1521:xe";
+	private String url = "jdbc:oracle:thin:@121.189.160.252:1521:xe";
 	private String user = "c##scott";
 	private String password = "tiger";
 	
